@@ -11,7 +11,7 @@ interface SubscriberInterface
      * @param string|null $name
      * @return bool
      */
-    public function subscribe(string $email, string $name): bool;
+    public function subscribe(string $email, string $name): ?string;
 
     /**
      * Unsubscribe user

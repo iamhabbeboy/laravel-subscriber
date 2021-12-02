@@ -2,10 +2,20 @@
 
 namespace Iamhabbeboy\Subscriber\Contracts\Services;
 
+use Exception;
+use GuzzleHttp\Exception\ClientException;
+use Iamhabbeboy\Subscriber\Traits\MailChimpConfig as Config;
 use Iamhabbeboy\Subscriber\Contracts\SubscriberInterface;
 
 class MailChimp implements SubscriberInterface
 {
+    use Config;
+
+    /**
+     * @param string STATUS
+     */
+    const STATUS = "pending";
+
     /**
      * User Subscription
      *
@@ -13,10 +23,23 @@ class MailChimp implements SubscriberInterface
      * @param string $name
      * @return boolean
      */
-    public function subscribe(string $email, string $name = null): bool
+    public function subscribe(string $email, string $name = null): string
     {
-        echo 'Mailchimp';
-        return true;
+        if (empty($email)) {
+            throw new \Exception('Email address is required');
+        }
+
+        try {
+            $response = $this->config()->lists->addListMember(config('subscription.list_id'), [
+                "name" => $name,
+                "email_address" => $email,
+                "status" => self::STATUS,
+            ]);
+
+            return $response->id;
+        } catch (ClientException $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -27,6 +50,25 @@ class MailChimp implements SubscriberInterface
      */
     public function unsubscribe(string $email): bool
     {
-        return false;
+        try {
+            $subscriber = $this->subscribe($email);
+
+            if ($subscriber instanceof Exception) {
+                return false;
+            }
+
+            if ($subscriber instanceof ClientException) {
+                return false;
+            }
+
+            $response = $this->config()->lists->deleteListMemberPermanent(
+                config('subscription.list_id'),
+                $subscriber
+            );
+
+            return (bool) $response->id;
+        } catch (ClientException $e) {
+            return false;
+        }
     }
 }
