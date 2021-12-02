@@ -1,50 +1,57 @@
 {
-    "name": "iamhabbeboy/laravel-subscriber",
-    "description": "Integrate subscription/unsubscription to your Laravel application.",
-    "authors": [
-        {
-            "name": "iamhabbeboy",
-            "email": "iamhabbeboy@gmail.com",
-            "homepage": "https://abiodunazeez.com",
-            "role": "Developer"
-        }
-    ],
-    "keywords": [
-        "iamhabbeboy",
-        "Abiodun Azeez",
-        "laravel-mail-subscription",
-        "mail subscription"
-    ],
-    "require": {
-        "php": "^7.2|^8.0",
-        "ext-json": "*",
-        "illuminate/support": "^6.0|^7.0|^8.0",
-        "mailchimp/marketing": "^3.0"
-    },
-    "require-dev": {
-        "mockery/mockery": "^1.4",
-        "phpunit/phpunit": "^8.0|^9.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Iamhabbeboy\\Subscriber\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Iamhabbeboy\\Subscriber\\Tests\\": "tests"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Iamhabbeboy\\Subscriber\\SubscriberServiceProvider"
-            ]
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "iamhabbeboy/laravel-subscriber",
+  "description": "Integrate subscription/unsubscription to your Laravel application.",
+  "authors": [
+    {
+      "name": "iamhabbeboy",
+      "email": "iamhabbeboy@gmail.com",
+      "homepage": "https://abiodunazeez.com",
+      "role": "Developer"
+    }
+  ],
+  "keywords": [
+    "iamhabbeboy",
+    "Abiodun Azeez",
+    "laravel-mail-subscription",
+    "mail subscription"
+  ],
+  "require": {
+    "php": "^7.2|^8.0",
+    "ext-json": "*",
+    "illuminate/support": "^6.0|^7.0|^8.0",
+    "mailchimp/marketing": "^3.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.4",
+    "phpunit/phpunit": "^8.0|^9.0",
+    "orchestra/testbench": "^4.0|^5.0",
+    "sempro/phpunit-pretty-print": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Iamhabbeboy\\Subscriber\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Iamhabbeboy\\Subscriber\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Iamhabbeboy\\Subscriber\\SubscriberServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "@php ./vendor/bin/testbench package:discover --ansi"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

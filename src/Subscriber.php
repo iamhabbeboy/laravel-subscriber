@@ -30,9 +30,9 @@ class Subscriber
      * @param string|null $name
      * @return boolean
      */
-    public function add(string $email, string $name = null)
+    public function add(string $email, string $name = null): bool
     {
-        $this->service->subscribe($email, $name);
+        return (bool) $this->service->subscribe($email, $name);
     }
     /**
      * Undocumented function
